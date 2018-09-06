@@ -1,9 +1,14 @@
 import argparse
 import sys
+import os
 from logging import getLogger, INFO, DEBUG, ERROR, FileHandler, StreamHandler, Formatter
 
 
-def logger(log_folder):
+def logger(log_folder="./logs"):
+
+    if not os.path.exists(log_folder):
+        os.mkdir(log_folder)
+
     logger = getLogger()
     logger.setLevel(INFO)
     formatter = Formatter(fmt='%(asctime)-15s: %(pathname)s:l-%(lineno)d:\n\t[%(levelname)s] %(message)s')
