@@ -2,7 +2,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 
-import const
+import mail_const as const
 import argparse
 
 parser = argparse.ArgumentParser(description='mailer for notifying finish of command')
