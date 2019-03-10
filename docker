@@ -1,7 +1,7 @@
 apt-get update
+apt-get install sudo
 apt-get install git
 apt-get install ssh
-apt-get install htop
 apt-get install wget
 apt-get install vim
 apt-get install zip
@@ -9,6 +9,9 @@ apt-get install unzip
 apt-get install gcc
 apt-get install htop
 apt install make
+apt-get -y install cmake
+apt install python3-pip
+sudo apt-get install software-properties-common
 systemctl enable docker
 systemctl start docker
 
