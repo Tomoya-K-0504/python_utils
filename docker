@@ -1,48 +1,32 @@
-apt-get update
-apt-get install sudo
-apt-get install git
-apt-get install ssh
-apt-get install wget
-apt-get install vim
-apt-get install zip
-apt-get install unzip
-apt-get install gcc
-apt-get install htop
-apt install make
-apt-get -y install cmake
-apt install python3-pip
-sudo apt-get install software-properties-common
-systemctl enable docker
-systemctl start docker
+sudo apt update
+sudo apt install sudo git ssh wget vim zip unzip gcc htop make cmake python3-pip software-properties-common
 
-
-# nvidia-docker
-sudo add-apt-repository ppa:xorg-edgers/ppa -y
+# docker
+sudo apt-get remove docker docker-engine docker.io containerd runc
 sudo apt-get update
-sudo apt-get upgrade
-wget https://www.nvidia.co.jp/content/DriverDownload-March2009/confirmation.php?url=/tesla/410.79/NVIDIA-Linux-x86_64-410.79.run&lang=jp&type=Tesla
-#https://github.com/NVIDIA/nvidia-docker/wiki/Installation-(version-2.0)#prerequisites
-sudo apt-get remove docker docker-engine docker.io
 sudo apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
+    gnupg-agent \
     software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
 sudo add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
    stable"
 sudo apt-get update
-sudo apt-get install docker-ce
-curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | \
-  sudo apt-key add -
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+
+# nvidia-docker
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | \
-  sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-sudo apt-get update
-sudo apt-get install nvidia-docker2
-sudo pkill -SIGHUP dockerd
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
 docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
 docker pull anibali/pytorch:cuda-10.0
 run -it --init   --runtime=nvidia   --ipc=host   --user="$(id -u):$(id -g)"   --volume=$PWD:/app   -e NVIDIA_VISIBLE_DEVICES=0   anibali/pytorch /bin/bash

@@ -1,0 +1,11 @@
+pandas 
+numpy 
+matplotlib
+scipy
+glibc
+sklearn
+ipywidgets
+seaborn
+plotly
+cufflinks
+padasip
